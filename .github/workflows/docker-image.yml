@@ -47,7 +47,7 @@ jobs:
         with:
           push: true
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/face-changer:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
