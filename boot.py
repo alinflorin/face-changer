@@ -2,7 +2,6 @@ from flask import Flask, request, send_file
 import flask
 import json
 import cv2
-from warnings import warn
 import os
 import numpy as np
 import dlib
