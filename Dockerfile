@@ -1,10 +1,11 @@
 FROM python
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
     libopenblas-dev \
+    python3-opencv \
     liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
 
