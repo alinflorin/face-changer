@@ -1,6 +1,5 @@
-FROM python:alpine
+FROM python
 WORKDIR /usr/src/app
-RUN apk --no-cache add musl-dev linux-headers g++
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
