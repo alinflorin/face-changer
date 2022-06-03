@@ -156,7 +156,7 @@ app = Flask(__name__)
 # Set up face detector
 face_detector = dlib.get_frontal_face_detector()
 feature_detector = dlib.shape_predictor(
-    "shape_predictor_68_face_landmarks.dat")
+   "shape_predictor_68_face_landmarks.dat")
 
 
 @app.route("/api/filters/apply", methods=['POST'])
@@ -204,3 +204,7 @@ def applyFilters():
                 print('All done')
     finally:
         os.remove(path)
+
+
+if __name__ == "__main__":
+    app.run()

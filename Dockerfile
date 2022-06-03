@@ -14,6 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt -vvv
 
 COPY . .
 
+RUN apt-get install -y --no-install-recommends libgl1
+
 ENV FLASK_APP=boot
 ENV FLASK_ENV=production
 CMD [ "python", "./boot.py" ]
