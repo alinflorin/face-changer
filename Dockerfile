@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 \
     libopenblas-dev \
     python3-opencv \
+    ffmpeg \
     liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
 

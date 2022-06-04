@@ -193,7 +193,7 @@ def applyFilters():
                                 height, width, channels = new_img.shape
                                 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                                 out = cv2.VideoWriter(
-                                    pathout, fourcc, 20, (width, height))
+                                    pathout, fourcc, 60, (width, height))
                             out.write(new_img)
                     else:
                         new_img = img
