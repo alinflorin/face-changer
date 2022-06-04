@@ -168,43 +168,45 @@ def applyFilters():
     fd, path = tempfile.mkstemp()
     pathout = tempfile.mktemp() + ".mp4"
     try:
-        with os.fdopen(fd, 'wb') as tmp:
-            tmp.write(raw_data)
-            cap = cv2.VideoCapture(path)
-            try:
-                while True:
-                    success, img = cap.read()
-                    if not success:
-                        break
-                    featuresList = detect_features(
-                        img, face_detector, feature_detector)
-                    if featuresList is not None:
-                        new_img = img
-                        for i in range(0, len(featuresList)):
-                            features = featuresList[i]
-                            new_features = get_new_features(
-                                features, filter)
-                            new_img = transform(
-                                new_img, features, new_features)
-                            #for x, y in new_features:
-                                #cv2.circle(img=new_img, center=(x, y),
-                                           #radius=3, color=(0, 255, 0), thickness=-1)
-                            if out is None:
-                                height, width, channels = new_img.shape
-                                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-                                out = cv2.VideoWriter(
-                                    pathout, fourcc, 60, (width, height))
-                            out.write(new_img)
-                    else:
-                        new_img = img
-                out.release()
-                cap.release()
-                return send_file(pathout, attachment_filename='result.mp4')
-            finally:
-                print('All done')
+        try:
+            with os.fdopen(fd, 'wb') as tmp:
+                tmp.write(raw_data)
+                cap = cv2.VideoCapture(path)
+                try:
+                    while True:
+                        success, img = cap.read()
+                        if not success:
+                            break
+                        featuresList = detect_features(
+                            img, face_detector, feature_detector)
+                        if featuresList is not None:
+                            new_img = img
+                            for i in range(0, len(featuresList)):
+                                features = featuresList[i]
+                                new_features = get_new_features(
+                                    features, filter)
+                                new_img = transform(
+                                    new_img, features, new_features)
+                                #for x, y in new_features:
+                                    #cv2.circle(img=new_img, center=(x, y),
+                                               #radius=3, color=(0, 255, 0), thickness=-1)
+                                if out is None:
+                                    height, width, channels = new_img.shape
+                                    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+                                    out = cv2.VideoWriter(
+                                        pathout, fourcc, 30, (width, height))
+                                out.write(new_img)
+                        else:
+                            new_img = img
+                    out.release()
+                    cap.release()
+                    return send_file(pathout, attachment_filename='result.mp4')
+                finally:
+                    print('All done')
+        finally:
+            os.remove(path)
     finally:
-        os.remove(path)
-
+        os.remove(pathout)
 
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0")
