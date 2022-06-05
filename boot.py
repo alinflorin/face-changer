@@ -192,10 +192,15 @@ def applyFilters():
                                     #cv2.circle(img=new_img, center=(x, y),
                                                #radius=3, color=(0, 255, 0), thickness=-1)
                                 if out is None:
+                                    probe = ffmpeg.probe(path)
+                                    video_info = next(
+                                        s for s in probe['streams'] if s['codec_type'] == 'video')
+                                    fps = int(video_info['r_frame_rate'].split('/')[0])
+                                    print(fps)
                                     height, width, channels = new_img.shape
                                     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                                     out = cv2.VideoWriter(
-                                        pathout, fourcc, 30, (width, height))
+                                        pathout, fourcc, fps, (width, height))
                                 out.write(new_img)
                         else:
                             new_img = img
