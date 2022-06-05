@@ -6,6 +6,7 @@ import os
 import numpy as np
 import dlib
 import tempfile
+import ffmpeg
 
 # Indices for face landmarks
 LOWER_HEAD = list(range(0, 17))
@@ -200,7 +201,18 @@ def applyFilters():
                             new_img = img
                     out.release()
                     cap.release()
-                    return send_file(pathout, attachment_filename='result.mp4')
+
+                    pathfinal = tempfile.mktemp() + ".mp4"
+                    try:
+                        originalVideo = ffmpeg.input(path)
+                        warpedVideo = ffmpeg.input(pathout)
+                        stream = ffmpeg.output(
+                            warpedVideo.video, originalVideo.audio, pathfinal)
+                        ffmpeg.run(stream)
+
+                        return send_file(pathfinal, attachment_filename='final.mp4')
+                    finally:
+                        os.remove(pathfinal)
                 finally:
                     print('All done')
         finally:
