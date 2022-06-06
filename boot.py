@@ -201,9 +201,12 @@ def applyFilters():
                                     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                                     out = cv2.VideoWriter(
                                         pathout, fourcc, fps, (width, height))
-                                out.write(new_img)
                         else:
                             new_img = img
+                            
+                        out.write(new_img)
+
+
                     out.release()
                     cap.release()
 
